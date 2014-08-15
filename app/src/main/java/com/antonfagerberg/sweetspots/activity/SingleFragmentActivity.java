@@ -1,8 +1,10 @@
-package com.antonfagerberg.sweetspots;
+package com.antonfagerberg.sweetspots.activity;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+
+import com.antonfagerberg.sweetspots.R;
 
 public abstract class SingleFragmentActivity extends Activity {
     protected abstract Fragment createFragment();

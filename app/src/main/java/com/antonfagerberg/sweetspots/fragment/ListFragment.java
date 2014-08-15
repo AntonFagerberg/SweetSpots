@@ -1,6 +1,6 @@
-package com.antonfagerberg.sweetspots;
+package com.antonfagerberg.sweetspots.fragment;
 
-import android.app.ListFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,16 +8,20 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.antonfagerberg.sweetspots.R;
+import com.antonfagerberg.sweetspots.activity.SweetSpotDetailsActivity;
+import com.antonfagerberg.sweetspots.model.SweetSpot;
+import com.antonfagerberg.sweetspots.model.SweetSpotCollection;
+
 import java.util.ArrayList;
 
-public class SweetSpotListFragment extends ListFragment {
+public class ListFragment extends android.app.ListFragment {
     private ArrayList<SweetSpot> mSweetSpots;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Get host activity
-        getActivity().setTitle("SweetSpots");
+        getActivity().setTitle(getString(R.string.app_name));
 
         mSweetSpots = SweetSpotCollection.get().getSweetSpots();
 
@@ -28,6 +32,9 @@ public class SweetSpotListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         SweetSpot sweetSpot = (SweetSpot) (getListAdapter()).getItem(position);
+        Intent intent = new Intent(getActivity(), SweetSpotDetailsActivity.class);
+        intent.putExtra(DetailsFragment.EXTRA_SWEET_SPOT_ID, sweetSpot.getId());
+        startActivity(intent);
     }
 
     private class SweetSpotAdapter extends ArrayAdapter<SweetSpot> {
@@ -47,7 +54,7 @@ public class SweetSpotListFragment extends ListFragment {
             titleTextView.setText(sweetSpot.getTitle());
 
             TextView descriptionTextView = (TextView) convertView.findViewById(R.id.sweetSpotListItemDescriptionTextView);
-            descriptionTextView.setText("This is a very long hard coded description which I will change later");
+            descriptionTextView.setText(sweetSpot.getDescription());
 
             return convertView;
         }

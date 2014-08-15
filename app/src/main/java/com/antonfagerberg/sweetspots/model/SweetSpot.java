@@ -1,4 +1,4 @@
-package com.antonfagerberg.sweetspots;
+package com.antonfagerberg.sweetspots.model;
 
 import java.util.UUID;
 
@@ -20,5 +20,11 @@ public class SweetSpot {
 
     public String getTitle() {
         return mTitle;
+    }
+
+    public UUID getId() { return mId; }
+
+    public String getDescription() {
+        return mDescription;
     }
 }
