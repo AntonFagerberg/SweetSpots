@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ListActivity" >
-    <item android:id="@+id/action_create"
+    <item android:id="@+id/action_camera"
         android:icon="@drawable/ic_action_camera"
         android:title="@string/take_picture"
         android:showAsAction="ifRoom"/>
