@@ -1,16 +1,24 @@
 package com.antonfagerberg.sweetspots.fragment;
 
 import android.app.Fragment;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.antonfagerberg.sweetspots.R;
+import com.antonfagerberg.sweetspots.helper.ImageHelper;
 import com.antonfagerberg.sweetspots.model.SweetSpot;
 import com.antonfagerberg.sweetspots.model.SweetSpotCollection;
 
+import java.io.File;
 import java.util.UUID;
 
 public class DetailsFragment extends Fragment {
@@ -34,6 +42,24 @@ public class DetailsFragment extends Fragment {
 
         TextView descriptionTextView = (TextView) view.findViewById(R.id.sweetSpotDetailsDescription);
         descriptionTextView.setText(mSweetSpot.getDescription());
+
+        final FrameLayout imageFrame = (FrameLayout) view.findViewById(R.id.sweetSpotDetailsImageFrame);
+        final ImageView imageView = (ImageView) view.findViewById(R.id.sweetSpotDetailsImage);
+
+        imageFrame.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                imageFrame.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                Uri imageUri = mSweetSpot.getUri();
+
+                if (imageUri != null && (new File(imageUri.getPath())).isFile()) {
+                    Bitmap scaledBitmap = ImageHelper.resize(imageUri, imageFrame.getWidth());
+                    imageView.setImageBitmap(scaledBitmap);
+                    imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                }
+            }
+        });
 
         return view;
     }

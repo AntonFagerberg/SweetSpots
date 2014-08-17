@@ -33,6 +33,7 @@
                     android:id="@+id/sweetSpotCreateImage"
                     android:background="@drawable/ic_action_picture"
                     android:layout_gravity="center" />
+
             </FrameLayout>
 
             <EditText

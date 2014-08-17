@@ -2,10 +2,8 @@ package com.antonfagerberg.sweetspots.fragment;
 
 import android.app.Fragment;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.antonfagerberg.sweetspots.R;
+import com.antonfagerberg.sweetspots.helper.ImageHelper;
 import com.antonfagerberg.sweetspots.model.SweetSpot;
 import com.antonfagerberg.sweetspots.model.SweetSpotCollection;
 
@@ -50,14 +49,7 @@ public class CreateFragment extends Fragment {
 
     public void setImage(Uri imageUri) {
         this.imageUri = imageUri;
-        Bitmap imageBitmap = BitmapFactory.decodeFile(imageUri.getPath());
-
-        int targetWidth = imageFrame.getWidth();
-        int originalWidth = imageBitmap.getWidth();
-        float scaleFactor = (float) targetWidth / originalWidth;
-        int targetHeight = (int) (imageBitmap.getHeight() * scaleFactor);
-
-        Bitmap scaledBitmap = Bitmap.createScaledBitmap(imageBitmap, targetWidth, targetHeight, true);
+        Bitmap scaledBitmap = ImageHelper.resize(imageUri, imageFrame.getWidth());
 
         imageView.setImageBitmap(scaledBitmap);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);

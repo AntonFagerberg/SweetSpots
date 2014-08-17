@@ -56,4 +56,8 @@ public class SweetSpot {
         jsonObject.put(JSON_IMAGE_URI, mImageUri == null ? "" : mImageUri.toString());
         return jsonObject;
     }
+
+    public Uri getUri() {
+        return mImageUri;
+    }
 }
