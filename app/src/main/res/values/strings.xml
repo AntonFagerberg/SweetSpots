@@ -4,4 +4,7 @@
     <string name="create">Create</string>
     <string name="details">Details</string>
     <string name="take_picture">Take picture</string>
+    <string name="save">Save</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
 </resources>

@@ -21,7 +21,7 @@ public class DetailsFragment extends Fragment {
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
         UUID uuid = (UUID) getArguments().getSerializable(DetailsFragment.EXTRA_SWEET_SPOT_ID);
-        mSweetSpot = SweetSpotCollection.get().getSweetSpot(uuid);
+        mSweetSpot = SweetSpotCollection.get(getActivity()).get(uuid);
         getActivity().setTitle(getString(R.string.details));
     }
 

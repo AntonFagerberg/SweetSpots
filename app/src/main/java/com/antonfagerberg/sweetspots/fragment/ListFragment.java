@@ -2,6 +2,7 @@ package com.antonfagerberg.sweetspots.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -16,17 +17,28 @@ import com.antonfagerberg.sweetspots.model.SweetSpotCollection;
 import java.util.ArrayList;
 
 public class ListFragment extends android.app.ListFragment {
-    private ArrayList<SweetSpot> mSweetSpots;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setTitle(getString(R.string.app_name));
 
-        mSweetSpots = SweetSpotCollection.get().getSweetSpots();
+        ArrayList<SweetSpot> mSweetSpots = SweetSpotCollection.get(getActivity()).getSweetSpots();
 
         SweetSpotAdapter adapter = new SweetSpotAdapter(mSweetSpots);
         setListAdapter(adapter);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        SweetSpotCollection.get(getActivity()).saveCrimes();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((SweetSpotAdapter) getListAdapter()).notifyDataSetChanged();
     }
 
     @Override

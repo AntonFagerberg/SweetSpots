@@ -14,7 +14,7 @@ import com.antonfagerberg.sweetspots.helper.MediaHelper;
 
 public class SweetSpotCreateActivity extends SingleFragmentActivity {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
-    private Uri fileUri;
+    private Uri imageUri;
 
     @Override
     protected Fragment createFragment() {
@@ -32,8 +32,8 @@ public class SweetSpotCreateActivity extends SingleFragmentActivity {
         switch (item.getItemId()) {
             case R.id.action_camera:
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                fileUri = MediaHelper.getOutputMediaFileUri(MediaHelper.MEDIA_TYPE_IMAGE);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+                imageUri = MediaHelper.getOutputMediaFileUri();
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
                 startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
                 break;
         }
@@ -44,6 +44,8 @@ public class SweetSpotCreateActivity extends SingleFragmentActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
+                CreateFragment createFragment = (CreateFragment) getFragmentManager().findFragmentById(R.id.fragmentContainer);
+                createFragment.setImage(imageUri);
                 Toast.makeText(this, "Image saved to:\n", Toast.LENGTH_LONG).show();
             } else if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(this, "cancel", Toast.LENGTH_LONG).show();
