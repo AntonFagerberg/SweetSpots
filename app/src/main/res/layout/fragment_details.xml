@@ -8,7 +8,6 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Exempeltitel"
         android:id="@+id/sweetSpotDetailsTitle"
         android:textSize="26sp"
         android:ellipsize="middle"
@@ -35,7 +34,6 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Text"
         android:id="@+id/sweetSpotDetailsDescription"
         android:textStyle="italic"
         android:padding="6dp" />

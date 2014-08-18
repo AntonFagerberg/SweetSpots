@@ -1,19 +1,25 @@
 package com.antonfagerberg.sweetspots.fragment;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.antonfagerberg.sweetspots.R;
 import com.antonfagerberg.sweetspots.activity.SweetSpotDetailsActivity;
+import com.antonfagerberg.sweetspots.helper.ImageHelper;
 import com.antonfagerberg.sweetspots.model.SweetSpot;
 import com.antonfagerberg.sweetspots.model.SweetSpotCollection;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class ListFragment extends android.app.ListFragment {
@@ -61,6 +67,23 @@ public class ListFragment extends android.app.ListFragment {
             }
 
             SweetSpot sweetSpot = getItem(position);
+
+
+            final Uri imageUri = sweetSpot.getUri();
+            final ImageView imageView = (ImageView) convertView.findViewById(R.id.sweetSpotListItemImageView);
+
+            imageView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    imageView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    if (imageUri != null && (new File(imageUri.getPath())).isFile()) {
+
+                        Bitmap scaledBitmap = ImageHelper.resize(imageUri, 60);
+                        imageView.setImageBitmap(scaledBitmap);
+                        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    }
+                }
+            });
 
             TextView titleTextView = (TextView) convertView.findViewById(R.id.sweetSpotListItemTitleTextView);
             titleTextView.setText(sweetSpot.getTitle());

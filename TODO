@@ -1,0 +1,13 @@
+ - Ta bort aktuell spot från details.
+ - Ta bort flera spots från lista.
+ - Ta bort bild från create(?).
+ - Inkludera GPS-data i create.
+ - Visa GPS-karta i details.
+ - Thumbnails i lista.
+ - Exportera data till fil? (Importera data?).
+ - Horisontal view.
+ - Retained fragments(?).
+ - Visa något i tom lista.
+ - Tillåt inte tom titel.
+ - Lista frameview och vettig layout enligt boken.
+ - Begränsa bara höjd i bild i listan - gör fyrkantig?

@@ -7,4 +7,6 @@
     <string name="save">Save</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
+    <string name="photo_capture_fail">Photo capturing canceled</string>
+    <string name="photo_capture_failed">Photo capturing failed!</string>
 </resources>

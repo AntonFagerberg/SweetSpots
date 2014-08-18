@@ -29,6 +29,7 @@ public class SweetSpotListActivity extends SingleFragmentActivity {
                 startActivity(intent);
                 break;
         }
+
         return super.onOptionsItemSelected(item);
     }
 }

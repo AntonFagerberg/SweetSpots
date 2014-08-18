@@ -37,6 +37,7 @@ public class SweetSpotCreateActivity extends SingleFragmentActivity {
                 startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
                 break;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -46,12 +47,10 @@ public class SweetSpotCreateActivity extends SingleFragmentActivity {
             if (resultCode == RESULT_OK) {
                 CreateFragment createFragment = (CreateFragment) getFragmentManager().findFragmentById(R.id.fragmentContainer);
                 createFragment.setImage(imageUri);
-                Toast.makeText(this, "Image saved to:\n", Toast.LENGTH_LONG).show();
             } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(this, "cancel", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.photo_capture_fail), Toast.LENGTH_LONG).show();
             } else {
-                // Image capture failed, advise user
-                Toast.makeText(this, "capture fail", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.photo_capture_failed), Toast.LENGTH_LONG).show();
             }
         }
     }
