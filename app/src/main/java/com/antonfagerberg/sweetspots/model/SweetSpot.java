@@ -62,7 +62,7 @@ public class SweetSpot {
         return mTitle;
     }
 
-    public UUID getId() { return mUuid; }
+    public UUID getUUID() { return mUuid; }
 
     public String getDescription() {
         return mDescription;

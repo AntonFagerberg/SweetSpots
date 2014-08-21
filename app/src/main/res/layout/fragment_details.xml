@@ -1,40 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1">
+    android:padding="6dp">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/sweetSpotDetailsTitle"
-        android:textSize="26sp"
-        android:ellipsize="middle"
-        android:padding="6dp"
-        android:autoText="false"
-        android:gravity="center_horizontal" />
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ccc"
-        android:padding="3dp"
-        android:id="@+id/sweetSpotDetailsImageFrame">
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/sweetSpotDetailsImage"
-            android:background="@drawable/ic_action_picture"
-            android:layout_gravity="center" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sweetSpotDetailsTitle"
+                    android:textSize="26sp"
+                    android:ellipsize="middle"
+                    android:padding="6dp"
+                    android:autoText="false"
+                    android:gravity="center_horizontal"
+                    android:textStyle="bold" />
 
-    </FrameLayout>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#ccc"
+                    android:padding="3dp"
+                    android:id="@+id/sweetSpotDetailsImageFrame">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/sweetSpotDetailsDescription"
-        android:textStyle="italic"
-        android:padding="6dp" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/sweetSpotDetailsImage"
+                        android:background="@drawable/ic_action_picture"
+                        android:layout_gravity="center" />
+
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sweetSpotDetailsDescription"
+                    android:textStyle="italic"
+                    android:padding="6dp" />
+            </LinearLayout>
+
+    </ScrollView>
+
 </LinearLayout>

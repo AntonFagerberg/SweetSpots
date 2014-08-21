@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +21,8 @@ import com.antonfagerberg.sweetspots.helper.ImageHelper;
 import com.antonfagerberg.sweetspots.model.SweetSpot;
 import com.antonfagerberg.sweetspots.model.SweetSpotCollection;
 
+import java.io.File;
+
 public class CreateFragment extends Fragment {
     private ImageView imageView;
     private FrameLayout imageFrame;
@@ -28,6 +31,7 @@ public class CreateFragment extends Fragment {
     private double longitude = 0d, latitude = 0d;
     private LocationManager locationManager;
     private LocationListener locationListener;
+    private final static String IMAGE_URI = "com.antonfagerberg.sweetspot.image_uri";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,6 +71,14 @@ public class CreateFragment extends Fragment {
         titleView = (TextView) view.findViewById(R.id.sweetSpotCreateTitle);
         descriptionView = (TextView) view.findViewById(R.id.sweetSpotCreateDescription);
 
+        if (savedInstanceState != null) {
+            String savedImageUri = savedInstanceState.getString(IMAGE_URI);
+
+            if (savedImageUri != null) {
+                setImage(Uri.parse(savedImageUri));
+            }
+        }
+
         (view.findViewById(R.id.sweetSpotCreateSaveButton)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 SweetSpot sweetSpot = new SweetSpot(titleView.getText().toString(), descriptionView.getText().toString(), imageUri, longitude, latitude);
@@ -79,9 +91,33 @@ public class CreateFragment extends Fragment {
 
     public void setImage(Uri imageUri) {
         this.imageUri = imageUri;
-        Bitmap scaledBitmap = ImageHelper.resize(imageUri, imageFrame.getWidth());
 
+        if (imageFrame.getWidth() == 0) {
+            final Uri finalUri = imageUri;
+            imageFrame.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    imageFrame.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    setImageToFrame(finalUri);
+                }
+            });
+        } else {
+            setImageToFrame(imageUri);
+        }
+    }
+
+    private void setImageToFrame(Uri imageUri) {
+        Bitmap scaledBitmap = ImageHelper.resize(imageUri, imageFrame.getWidth());
         imageView.setImageBitmap(scaledBitmap);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (imageUri != null) {
+            outState.putString(IMAGE_URI, imageUri.toString());
+        }
+        super.onSaveInstanceState(outState);
     }
 }

@@ -42,9 +42,19 @@ public class SweetSpotCollection {
         mSweetSpots.add(sweetSpot);
     }
 
-    public SweetSpot get(UUID id) {
+    public void remove(UUID uuid) {
+        for (int i = 0; i < mSweetSpots.size(); i++) {
+            System.out.println("!!!");
+            if (mSweetSpots.get(i).getUUID().equals(uuid)) {
+                mSweetSpots.remove(i);
+                return;
+            }
+        }
+    }
+
+    public SweetSpot get(UUID uuid) {
         for (SweetSpot s : mSweetSpots) {
-            if (s.getId().equals(id)) {
+            if (s.getUUID().equals(uuid)) {
                 return s;
             }
         }

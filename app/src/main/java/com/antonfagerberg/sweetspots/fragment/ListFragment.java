@@ -4,10 +4,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -51,7 +49,7 @@ public class ListFragment extends android.app.ListFragment {
     public void onListItemClick(ListView listView, View view, int position, long id) {
         SweetSpot sweetSpot = (SweetSpot) (getListAdapter()).getItem(position);
         Intent intent = new Intent(getActivity(), SweetSpotDetailsActivity.class);
-        intent.putExtra(DetailsFragment.EXTRA_SWEET_SPOT_ID, sweetSpot.getId());
+        intent.putExtra(DetailsFragment.EXTRA_SWEET_SPOT_ID, sweetSpot.getUUID());
         startActivity(intent);
     }
 
@@ -67,23 +65,16 @@ public class ListFragment extends android.app.ListFragment {
             }
 
             SweetSpot sweetSpot = getItem(position);
+            Uri imageUri = sweetSpot.getUri();
+            ImageView imageView = (ImageView) convertView.findViewById(R.id.sweetSpotListItemImageView);
 
-
-            final Uri imageUri = sweetSpot.getUri();
-            final ImageView imageView = (ImageView) convertView.findViewById(R.id.sweetSpotListItemImageView);
-
-            imageView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    imageView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                    if (imageUri != null && (new File(imageUri.getPath())).isFile()) {
-
-                        Bitmap scaledBitmap = ImageHelper.resize(imageUri, 60);
-                        imageView.setImageBitmap(scaledBitmap);
-                        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                    }
-                }
-            });
+            if (imageUri != null && (new File(imageUri.getPath())).isFile()) {
+                Bitmap scaledBitmap = ImageHelper.resize(imageUri, 60);
+                imageView.setImageBitmap(scaledBitmap);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            } else {
+                imageView.setImageResource(R.drawable.ic_action_picture);
+            }
 
             TextView titleTextView = (TextView) convertView.findViewById(R.id.sweetSpotListItemTitleTextView);
             titleTextView.setText(sweetSpot.getTitle());
