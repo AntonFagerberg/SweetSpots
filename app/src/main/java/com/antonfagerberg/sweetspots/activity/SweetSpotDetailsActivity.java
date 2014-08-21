@@ -1,25 +1,30 @@
 package com.antonfagerberg.sweetspots.activity;
 
 import android.app.Fragment;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.antonfagerberg.sweetspots.R;
 import com.antonfagerberg.sweetspots.fragment.DetailsFragment;
-import com.antonfagerberg.sweetspots.fragment.ListFragment;
+import com.antonfagerberg.sweetspots.model.SweetSpot;
+import com.antonfagerberg.sweetspots.model.SweetSpotCollection;
 
 import java.util.UUID;
 
 public class SweetSpotDetailsActivity extends SingleFragmentActivity {
+    private UUID sweetSpotUUID;
 
     @Override
     protected Fragment createFragment() {
         Fragment fragment = new DetailsFragment();
 
         Bundle args = new Bundle();
-        UUID sweetSpotId = (UUID) getIntent().getSerializableExtra(DetailsFragment.EXTRA_SWEET_SPOT_ID);
-        args.putSerializable(DetailsFragment.EXTRA_SWEET_SPOT_ID, sweetSpotId);
+        sweetSpotUUID = (UUID) getIntent().getSerializableExtra(DetailsFragment.EXTRA_SWEET_SPOT_ID);
+        args.putSerializable(DetailsFragment.EXTRA_SWEET_SPOT_ID, sweetSpotUUID);
         fragment.setArguments(args);
 
         return fragment;
@@ -28,11 +33,27 @@ public class SweetSpotDetailsActivity extends SingleFragmentActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.details, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_map:
+                SweetSpot sweetSpot = SweetSpotCollection.get(this).get(sweetSpotUUID);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+
+                if (sweetSpot != null && intent.resolveActivity(getPackageManager()) != null) {
+                    String geoString = "geo:0,0?q=" + sweetSpot.getLatitude() + "," + sweetSpot.getLongitude() + "(" + sweetSpot.getTitle() + ")";
+                    intent.setData(Uri.parse(geoString));
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(this, getString(R.string.map_fail), Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 }

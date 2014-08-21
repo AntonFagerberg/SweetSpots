@@ -1,7 +1,11 @@
 package com.antonfagerberg.sweetspots.fragment;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,11 +25,37 @@ public class CreateFragment extends Fragment {
     private FrameLayout imageFrame;
     private Uri imageUri;
     private TextView titleView, descriptionView;
+    private double longitude = 0d, latitude = 0d;
+    private LocationManager locationManager;
+    private LocationListener locationListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setTitle(getString(R.string.create));
+
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+
+        locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                longitude = location.getLongitude();
+                latitude = location.getLatitude();
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+            public void onProviderEnabled(String provider) {}
+
+            public void onProviderDisabled(String provider) {}
+        };
+
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        locationManager.removeUpdates(locationListener);
     }
 
     @Override
@@ -39,7 +69,7 @@ public class CreateFragment extends Fragment {
 
         (view.findViewById(R.id.sweetSpotCreateSaveButton)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                SweetSpot sweetSpot = new SweetSpot(titleView.getText().toString(), descriptionView.getText().toString(), imageUri);
+                SweetSpot sweetSpot = new SweetSpot(titleView.getText().toString(), descriptionView.getText().toString(), imageUri, longitude, latitude);
                 SweetSpotCollection.get(getActivity()).add(sweetSpot);
                 getActivity().finish();
             }

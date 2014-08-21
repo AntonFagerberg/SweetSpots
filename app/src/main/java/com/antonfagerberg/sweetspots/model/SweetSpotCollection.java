@@ -6,7 +6,6 @@ import android.util.Log;
 import com.antonfagerberg.sweetspots.helper.SweetSpotJSONSerializer;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.UUID;
 
 public class SweetSpotCollection {
@@ -18,7 +17,6 @@ public class SweetSpotCollection {
         FILENAME = "sweetspots.json";
 
     private SweetSpotCollection(Context context) {
-//        mSweetSpots = new ArrayList<SweetSpot>();
         mSerializer = new SweetSpotJSONSerializer(context, FILENAME);
 
         try {
@@ -26,13 +24,6 @@ public class SweetSpotCollection {
         } catch (Exception exception) {
             Log.e(TAG, "Error loading crimes: ", exception);
         }
-
-//        Random r = new Random();
-//
-//        for (int i = 0; i < 100; i++) {
-//            SweetSpot s = new SweetSpot(String.valueOf(r.nextLong()), "Now that CrimeFragment fetches a Crime, its view can display that Crime’s data. Update onCreateView(…) to display the Crime’s title and solved status. (The code for displaying the date is already in place.) Excerpt From: Brian Hardy. “Android Programming: The Big Nerd Ranch Guide.” iBooks.", null);
-//            mSweetSpots.add(s);
-//        }
     }
 
     public static SweetSpotCollection get(Context context) {

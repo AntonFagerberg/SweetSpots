@@ -2,6 +2,7 @@ package com.antonfagerberg.sweetspots.activity;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.Menu;
 import android.view.MenuItem;
 
