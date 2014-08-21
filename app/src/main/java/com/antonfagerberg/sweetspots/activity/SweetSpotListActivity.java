@@ -2,7 +2,6 @@ package com.antonfagerberg.sweetspots.activity;
 
 import android.app.Fragment;
 import android.content.Intent;
-import android.net.Uri;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -12,14 +11,14 @@ import com.antonfagerberg.sweetspots.fragment.ListFragment;
 public class SweetSpotListActivity extends SingleFragmentActivity {
 
     @Override
-    protected Fragment createFragment() {
-        return new ListFragment();
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.list, menu);
         return true;
+    }
+
+    @Override
+    protected Fragment createFragment() {
+        return new ListFragment();
     }
 
     @Override
@@ -33,4 +32,5 @@ public class SweetSpotListActivity extends SingleFragmentActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

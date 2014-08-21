@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -36,17 +38,20 @@ public class ListFragment extends android.app.ListFragment {
     @Override
     public void onPause() {
         super.onPause();
-        SweetSpotCollection.get(getActivity()).saveCrimes();
+        // Persist SweetSpots to disk.
+        SweetSpotCollection.get(getActivity()).saveSweetSpots();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        setEmptyText(getString(R.string.list_empty));
         ((SweetSpotAdapter) getListAdapter()).notifyDataSetChanged();
     }
 
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
+        // View a specific SweetSpot.
         SweetSpot sweetSpot = (SweetSpot) (getListAdapter()).getItem(position);
         Intent intent = new Intent(getActivity(), SweetSpotDetailsActivity.class);
         intent.putExtra(DetailsFragment.EXTRA_SWEET_SPOT_ID, sweetSpot.getUUID());
@@ -68,6 +73,7 @@ public class ListFragment extends android.app.ListFragment {
             Uri imageUri = sweetSpot.getUri();
             ImageView imageView = (ImageView) convertView.findViewById(R.id.sweetSpotListItemImageView);
 
+            // Use the image stored on disk if present - or use default placeholder.
             if (imageUri != null && (new File(imageUri.getPath())).isFile()) {
                 Bitmap scaledBitmap = ImageHelper.resize(imageUri, 60);
                 imageView.setImageBitmap(scaledBitmap);
@@ -84,5 +90,12 @@ public class ListFragment extends android.app.ListFragment {
 
             return convertView;
         }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.details, menu);
     }
 }

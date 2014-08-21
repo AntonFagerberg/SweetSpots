@@ -23,11 +23,24 @@ public class SweetSpotJSONSerializer {
     private Context mContext;
     private String mFilename;
 
+    /**
+     * Constructor to create a SweetSpot to JSON serializer.
+     *
+     * @param context Application context.
+     * @param filename Name of file to save to disk.
+     */
     public SweetSpotJSONSerializer(Context context, String filename) {
         mContext = context;
         mFilename = filename;
     }
 
+    /**
+     * Persist all SweetSpots to disk in JSON format.
+     *
+     * @param sweetSpots List of SweetSpots.
+     * @throws JSONException
+     * @throws IOException
+     */
     public void saveSweetSpots(ArrayList<SweetSpot> sweetSpots) throws JSONException, IOException {
         JSONArray jsonArray = new JSONArray();
 
@@ -48,6 +61,13 @@ public class SweetSpotJSONSerializer {
         }
     }
 
+    /**
+     * Load all persisted SweetSpots from disk.
+     *
+     * @return List of SweetSpots.
+     * @throws IOException
+     * @throws JSONException
+     */
     public ArrayList<SweetSpot> loadSweetSpots() throws IOException, JSONException {
         ArrayList<SweetSpot> sweetSpots = new ArrayList<SweetSpot>();
 

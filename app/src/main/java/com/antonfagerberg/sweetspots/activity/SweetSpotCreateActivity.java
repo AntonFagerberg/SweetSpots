@@ -32,6 +32,7 @@ public class SweetSpotCreateActivity extends SingleFragmentActivity {
         switch (item.getItemId()) {
             case R.id.action_camera:
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                // URI where to store the image.
                 imageUri = MediaHelper.getOutputMediaFileUri();
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
                 startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
@@ -45,6 +46,7 @@ public class SweetSpotCreateActivity extends SingleFragmentActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
+                // Image was saved to disk.
                 CreateFragment createFragment = (CreateFragment) getFragmentManager().findFragmentById(R.id.fragmentContainer);
                 createFragment.setImage(imageUri);
             } else if (resultCode == RESULT_CANCELED) {

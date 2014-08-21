@@ -24,6 +24,15 @@ public class SweetSpot {
         JSON_LATITUDE = "latitude",
         JSON_LONGITUDE = "longitude";
 
+    /**
+     * Constructor to create a new SweetSpot.
+     *
+     * @param title Title.
+     * @param description Description.
+     * @param imageUri URI to the image on disk.
+     * @param longitude Location longitude.
+     * @param latitude Location latitude.
+     */
     public SweetSpot(String title, String description, Uri imageUri, double longitude, double latitude) {
         mTitle = title;
         mDescription = description;
@@ -33,6 +42,13 @@ public class SweetSpot {
         this.latitude = latitude;
     }
 
+    /**
+     * Constructor to create a new SweetSpot from JSON.
+     * This is used when loading persisted SweetSpots from the disk.
+     *
+     * @param jsonObject JSON Object.
+     * @throws JSONException
+     */
     public SweetSpot(JSONObject jsonObject) throws JSONException {
         mUuid = UUID.fromString(jsonObject.getString(JSON_ID));
         mTitle = jsonObject.getString(JSON_TITLE);
@@ -43,6 +59,12 @@ public class SweetSpot {
         latitude = jsonObject.getDouble(JSON_LATITUDE);
     }
 
+    /**
+     * Create a JSON representation of the SweetSpot.
+
+     * @return JSON representation of the SweetSpot.
+     * @throws JSONException
+     */
     public JSONObject toJSON() throws JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put(JSON_ID, mUuid.toString());
@@ -54,28 +76,56 @@ public class SweetSpot {
         return jsonObject;
     }
 
-    public String toString() {
-        return mTitle;
-    }
-
+    /**
+     * Get the title of the SweetSpot.
+     *
+     * @return Title of the SweetSpot.
+     */
     public String getTitle() {
         return mTitle;
     }
 
-    public UUID getUUID() { return mUuid; }
+    /**
+     * Get the UUID of the SweetSpot.
+     *
+     * @return UUID of the SweetSpot.
+     */
+    public UUID getUUID() {
+        return mUuid;
+    }
 
+    /**
+     * Get the description of the SweetSpot.
+     *
+     * @return Description of the SweetSpot.
+     */
     public String getDescription() {
         return mDescription;
     }
 
+    /**
+     * Get the URI to the image stored on disk.
+     *
+     * @return URI to the image.
+     */
     public Uri getUri() {
         return mImageUri;
     }
 
+    /**
+     * Get the location longitude.
+     *
+     * @return Location longitude.
+     */
     public double getLongitude() {
         return longitude;
     }
 
+    /**
+     * Get the location latitude.
+     *
+     * @return Location latitude.
+     */
     public double getLatitude() {
         return latitude;
     }

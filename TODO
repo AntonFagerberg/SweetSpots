@@ -1,7 +1,4 @@
- - Ta bort aktuell spot från details.
- - Ta bort flera spots från lista.
- - Visa något i tom lista.
  - Lista frameview och vettig layout enligt boken.
-
-(- Editera SweetSpot.)
-(- Tillåt inte tom titel.)
+ - Ta bort flera spots från lista.
+ - Editera SweetSpot.
+ - Tillåt inte tom titel.

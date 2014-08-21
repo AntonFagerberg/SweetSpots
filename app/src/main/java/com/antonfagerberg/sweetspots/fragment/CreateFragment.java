@@ -21,8 +21,6 @@ import com.antonfagerberg.sweetspots.helper.ImageHelper;
 import com.antonfagerberg.sweetspots.model.SweetSpot;
 import com.antonfagerberg.sweetspots.model.SweetSpotCollection;
 
-import java.io.File;
-
 public class CreateFragment extends Fragment {
     private ImageView imageView;
     private FrameLayout imageFrame;
@@ -41,6 +39,7 @@ public class CreateFragment extends Fragment {
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
         locationListener = new LocationListener() {
+            // Store the current latitude and longitude from location data.
             public void onLocationChanged(Location location) {
                 longitude = location.getLongitude();
                 latitude = location.getLatitude();
@@ -71,6 +70,7 @@ public class CreateFragment extends Fragment {
         titleView = (TextView) view.findViewById(R.id.sweetSpotCreateTitle);
         descriptionView = (TextView) view.findViewById(R.id.sweetSpotCreateDescription);
 
+        // Restore captured image after decide rotation.
         if (savedInstanceState != null) {
             String savedImageUri = savedInstanceState.getString(IMAGE_URI);
 
@@ -79,6 +79,7 @@ public class CreateFragment extends Fragment {
             }
         }
 
+        // Save image in collection.
         (view.findViewById(R.id.sweetSpotCreateSaveButton)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 SweetSpot sweetSpot = new SweetSpot(titleView.getText().toString(), descriptionView.getText().toString(), imageUri, longitude, latitude);
@@ -92,6 +93,7 @@ public class CreateFragment extends Fragment {
     public void setImage(Uri imageUri) {
         this.imageUri = imageUri;
 
+        // If the imageFrame is not inflated - wait until its done.
         if (imageFrame.getWidth() == 0) {
             final Uri finalUri = imageUri;
             imageFrame.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -115,6 +117,7 @@ public class CreateFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        // If an image has been captured, save the URI on device rotation.
         if (imageUri != null) {
             outState.putString(IMAGE_URI, imageUri.toString());
         }

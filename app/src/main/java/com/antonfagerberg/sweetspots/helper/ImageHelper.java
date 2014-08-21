@@ -7,6 +7,13 @@ import android.net.Uri;
 import static android.graphics.Bitmap.createScaledBitmap;
 
 public class ImageHelper {
+    /**
+     * Create a resized Bitmap from the image URI.
+     *
+     * @param imageUri URI to the image on disk.
+     * @param targetWidth Desired width of the resulting bitmap.
+     * @return Resized bitmap.
+     */
     public static Bitmap resize(Uri imageUri, int targetWidth) {
         Bitmap imageBitmap = BitmapFactory.decodeFile(imageUri.getPath());
 

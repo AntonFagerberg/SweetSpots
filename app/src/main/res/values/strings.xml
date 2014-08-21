@@ -12,4 +12,10 @@
     <string name="view_map">View map</string>
     <string name="map_fail">Unable to launch map!</string>
     <string name="remove">Remove</string>
+    <string name="list_empty">"No SweetSpots saved yet!"</string>
+    <string name="confirm_delete">Remove selected SweetSpot?</string>
+    <string name="dialog_yes">YES</string>
+    <string name="dialog_no">NO</string>
+    <string name="sweet_spot_removed">SweetSpot removed!</string>
+    <string name="remove_canceled">Removal canceled!</string>
 </resources>
